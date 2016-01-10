@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/zestedesavoir/django-cors-middleware.svg?branch=master)](https://travis-ci.org/zestedesavoir/django-cors-middleware)
-[![codecov.io](http://codecov.io/github/ottoyiu/django-cors-headers/coverage.svg?branch=master)](http://codecov.io/github/ottoyiu/django-cors-headers?branch=master)
+[![codecov.io](http://codecov.io/github/zestedesavoir/django-cors-middleware/coverage.svg?branch=master)](http://codecov.io/github/ottoyiu/zestedesavoir/django-cors-middleware?branch=master)
 
 django-cors-middleware 
 ==================
