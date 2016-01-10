@@ -1,8 +1,10 @@
 [![Build Status](https://travis-ci.org/zestedesavoir/django-cors-middleware.svg?branch=master)](https://travis-ci.org/zestedesavoir/django-cors-middleware)
 [![codecov.io](http://codecov.io/github/zestedesavoir/django-cors-middleware/coverage.svg?branch=master)](http://codecov.io/github/ottoyiu/zestedesavoir/django-cors-middleware?branch=master)
 
+[![PyPI](https://img.shields.io/pypi/v/nine.svg)](https://pypi.python.org/pypi/django-cors-middleware)
+
 django-cors-middleware 
-==================
+======================
 
 A Django App that adds CORS (Cross-Origin Resource Sharing) headers to responses.
 
@@ -10,7 +12,10 @@ Although JSON-P is useful, it is strictly limited to GET requests. CORS builds o
 
 This is a fork of [https://github.com/ottoyiu/django-cors-headers/](django-cors-headers by ottoyiu) because of inactivity.
 
+django-cors-middleware supports Django 1.8 (python 2.7, 3.3, 3.4 and 3.5) and Django 1.9 (python 2.7, 3.4 and 3.5).
+
 ## Setup ##
+
 Install by downloading the source and running:
 
 >   python setup.py install
