@@ -48,36 +48,39 @@ Note that `CorsMiddleware` needs to come before Django's `CommonMiddleware` if y
 Add hosts that are allowed to do cross-site requests to `CORS_ORIGIN_WHITELIST` or set `CORS_ORIGIN_ALLOW_ALL` to `True` to allow all hosts.
 
 
->CORS\_ORIGIN\_ALLOW\_ALL: if True, the whitelist will not be used and all origins will be accepted
+### `CORS_ORIGIN_ALLOW_ALL`
+If True, the whitelist will not be used and all origins will be accepted
 
-    Default:
+Default:
 
-        CORS_ORIGIN_ALLOW_ALL = False
+    CORS_ORIGIN_ALLOW_ALL = False
 
->CORS\_ORIGIN\_WHITELIST: specify a list of origin hostnames that are authorized to make a cross-site HTTP request
+### `CORS_ORIGIN_WHITELIST`
+Specify a list of origin hostnames that are authorized to make a cross-site HTTP request
 
-    Example:
+Example:
 
-        CORS_ORIGIN_WHITELIST = (
-            'google.com',
-            'hostname.example.com'
-        )
-
-
-    Default:
-
-        CORS_ORIGIN_WHITELIST = ()
-
->CORS\_ORIGIN\_REGEX\_WHITELIST: specify a regex list of origin hostnames that are authorized to make a cross-site HTTP request; Useful when you have a large amount of subdomains for instance.
-
-    Example:
-
-        CORS_ORIGIN_REGEX_WHITELIST = ('^(https?://)?(\w+\.)?google\.com$', )
+    CORS_ORIGIN_WHITELIST = (
+        'google.com',
+        'hostname.example.com'
+    )
 
 
-    Default:
+Default:
 
-        CORS_ORIGIN_REGEX_WHITELIST = ()
+    CORS_ORIGIN_WHITELIST = ()
+
+### `CORS_ORIGIN_REGEX_WHITELIST`
+Specify a regex list of origin hostnames that are authorized to make a cross-site HTTP request; Useful when you have a large amount of subdomains for instance.
+
+Example:
+
+    CORS_ORIGIN_REGEX_WHITELIST = ('^(https?://)?(\w+\.)?google\.com$', )
+
+
+Default:
+
+    CORS_ORIGIN_REGEX_WHITELIST = ()
 
 
 ---
@@ -86,66 +89,73 @@ Add hosts that are allowed to do cross-site requests to `CORS_ORIGIN_WHITELIST` 
 You may optionally specify these options in settings.py to override the defaults. Defaults are shown below:
 
 
->CORS\_URLS\_REGEX: specify a URL regex for which to enable the sending of CORS headers; Useful when you only want to enable CORS for specific URLs, e. g. for a REST API under ``/api/``.
+### `CORS_URLS_REGEX`
+Specify a URL regex for which to enable the sending of CORS headers; Useful when you only want to enable CORS for specific URLs, e. g. for a REST API under `/api/`.
 
-    Example:
+Example:
 
-        CORS_URLS_REGEX = r'^/api/.*$'
+    CORS_URLS_REGEX = r'^/api/.*$'
 
-    Default:
+Default:
 
-        CORS_URLS_REGEX = '^.*$'
+    CORS_URLS_REGEX = '^.*$'
 
->CORS\_ALLOW\_METHODS: specify the allowed HTTP methods that can be used when making the actual request
+### `CORS_ALLOW_METHODS`
+Specify the allowed HTTP methods that can be used when making the actual request
 
-    Default:
+Default:
 
-        CORS_ALLOW_METHODS = (
-            'GET',
-            'POST',
-            'PUT',
-            'PATCH',
-            'DELETE',
-            'OPTIONS'
-        )
+    CORS_ALLOW_METHODS = (
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE',
+        'OPTIONS'
+    )
 
->CORS\_ALLOW\_HEADERS: specify which non-standard HTTP headers can be used when making the actual request
+### `CORS_ALLOW_HEADERS`
+Specify which non-standard HTTP headers can be used when making the actual request
 
-    Default:
+Default:
 
-        CORS_ALLOW_HEADERS = (
-            'x-requested-with',
-            'content-type',
-            'accept',
-            'origin',
-            'authorization',
-            'x-csrftoken'
-        )
+    CORS_ALLOW_HEADERS = (
+        'x-requested-with',
+        'content-type',
+        'accept',
+        'origin',
+        'authorization',
+        'x-csrftoken'
+    )
 
->CORS\_EXPOSE\_HEADERS: specify which HTTP headers are to be exposed to the browser
+### `CORS_EXPOSE_HEADERS`
+Specify which HTTP headers are to be exposed to the browser
 
-    Default:
+Default:
 
-        CORS_EXPOSE_HEADERS = ()
+    CORS_EXPOSE_HEADERS = ()
 
->CORS\_PREFLIGHT\_MAX\_AGE: specify the number of seconds a client/browser can cache the preflight response
+### `CORS_PREFLIGHT_MAX_AGE`
+Specify the number of seconds a client/browser can cache the preflight response
 
-    Note: A preflight request is an extra request that is made when making a "not-so-simple" request (eg. content-type is not application/x-www-form-urlencoded) to determine what requests the server actually accepts. Read more about it here: [http://www.html5rocks.com/en/tutorials/cors/](http://www.html5rocks.com/en/tutorials/cors/)
+Note: A preflight request is an extra request that is made when making a "not-so-simple" request (eg. content-type is not application/x-www-form-urlencoded) to determine what requests the server actually accepts. Read more about it here: [http://www.html5rocks.com/en/tutorials/cors/](http://www.html5rocks.com/en/tutorials/cors/)
 
-    Default:
+Default:
 
-        CORS_PREFLIGHT_MAX_AGE = 86400
+    CORS_PREFLIGHT_MAX_AGE = 86400
 
->CORS\_ALLOW\_CREDENTIALS: specify whether or not cookies are allowed to be included in cross-site HTTP requests (CORS).
+### `CORS_ALLOW_CREDENTIALS`
+Specify whether or not cookies are allowed to be included in cross-site HTTP requests (CORS).
 
-    Default:
+Default:
 
-        CORS_ALLOW_CREDENTIALS = False
+    CORS_ALLOW_CREDENTIALS = False
 
->CORS\_REPLACE\_HTTPS\_REFERER: specify whether to replace the HTTP_REFERER header if CORS checks pass so that CSRF django middleware checks will work with https
+### `CORS_REPLACE_HTTPS_REFERER`
+Specify whether to replace the HTTP_REFERER header if CORS checks pass so that CSRF django middleware checks will work with https
 
-    Note: With this feature enabled, you also need to add the corsheaders.middleware.CorsPostCsrfMiddleware after django.middleware.csrf.CsrfViewMiddleware to undo the header replacement
+Note: With this feature enabled, you also need to add the corsheaders.middleware.CorsPostCsrfMiddleware after django.middleware.csrf.CsrfViewMiddleware to undo the header replacement
 
-    Default:
+Default:
 
-        CORS_REPLACE_HTTPS_REFERER = False
+    CORS_REPLACE_HTTPS_REFERER = False
