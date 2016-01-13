@@ -22,7 +22,7 @@ Install by downloading the source and running:
 
 or
 
->   pip install django-cors-headers
+>   pip install django-cors-middleware
 
 and then add it to your installed apps:
 
