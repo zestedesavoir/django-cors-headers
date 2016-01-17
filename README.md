@@ -12,7 +12,12 @@ Although JSON-P is useful, it is strictly limited to GET requests. CORS builds o
 
 This is a fork of [https://github.com/ottoyiu/django-cors-headers/](django-cors-headers by ottoyiu) because of inactivity.
 
-django-cors-middleware supports Django 1.8 (python 2.7, 3.3, 3.4 and 3.5) and Django 1.9 (python 2.7, 3.4 and 3.5).
+Supported versions of Python and Django :
+
+|                | **Py 2.7** | **Py 3.3** | **Py 3.4** | **Py 3.5** |
+| :------------: | :--------: | :--------: | :--------: | :--------: | 
+| **Django 1.8** | YES        | YES        | YES        | YES        |
+| **Django 1.9** | YES        |            | YES        | YES        |
 
 ## Setup ##
 
