@@ -9,22 +9,28 @@ def run_tests():
     from django.conf import global_settings
     from django.conf import settings
 
-    middleware = list(global_settings.MIDDLEWARE_CLASSES)
+    if django.VERSION >= (1, 10):
+        middleware_setting = 'MIDDLEWARE'
+    else:
+        middleware_setting = 'MIDDLEWARE_CLASSES'
+
+    middleware = list(getattr(global_settings, middleware_setting) or [])
     middleware.append('corsheaders.middleware.CorsMiddleware')
 
-    settings.configure(
-        INSTALLED_APPS=[
+    config = {
+        'INSTALLED_APPS': [
             'corsheaders',
         ],
-        DATABASES={
+        'DATABASES': {
             'default': {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'TEST_NAME': ':memory:',
             },
         },
-        ROOT_URLCONF='corsheaders.tests',
-        MIDDLEWARE_CLASSES=middleware,
-    )
+        'ROOT_URLCONF': 'corsheaders.tests',
+        middleware_setting: middleware,
+    }
+    settings.configure(**config)
 
     if hasattr(django, 'setup'):
         django.setup()
