@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from corsheaders import __version__
 from setuptools import setup
 
