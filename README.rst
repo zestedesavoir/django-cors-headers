@@ -51,12 +51,12 @@ You will also need to add a middleware class to listen in on responses:
 
 ::
 
-    MIDDLEWARE_CLASSES = (
+    MIDDLEWARE_CLASSES = [
         ...
         'corsheaders.middleware.CorsMiddleware',
         'django.middleware.common.CommonMiddleware',
         ...
-    )
+    ]
 
 Note that ``CorsMiddleware`` needs to come before Django’s
 ``CommonMiddleware`` if you are using Django’s ``USE_ETAGS = True``
