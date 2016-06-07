@@ -25,6 +25,8 @@ Supported versions of Python and Django :
 +------------------+--------------+--------------+--------------+--------------+
 | **Django 1.9**   | YES          |              | YES          | YES          |
 +------------------+--------------+--------------+--------------+--------------+
+| **Django 1.10**  | YES          |              | YES          | YES          |
++------------------+--------------+--------------+--------------+--------------+
 
 Setup
 -----
@@ -51,7 +53,8 @@ You will also need to add a middleware class to listen in on responses:
 
 ::
 
-    MIDDLEWARE_CLASSES = [
+    # Use `MIDDLEWARE_CLASSES` prior to Django 1.10
+    MIDDLEWARE = [
         ...
         'corsheaders.middleware.CorsMiddleware',
         'django.middleware.common.CommonMiddleware',

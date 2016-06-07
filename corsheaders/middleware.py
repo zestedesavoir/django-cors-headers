@@ -15,6 +15,13 @@ except ImportError:
     except ImportError:
         from django.apps.apps.get_model import get_model
 
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    # Not required for Django <= 1.9, see:
+    # https://docs.djangoproject.com/en/1.10/topics/http/middleware/#upgrading-pre-django-1-10-style-middleware
+    MiddlewareMixin = object
+
 from corsheaders import defaults as settings
 
 
@@ -26,7 +33,7 @@ ACCESS_CONTROL_ALLOW_METHODS = 'Access-Control-Allow-Methods'
 ACCESS_CONTROL_MAX_AGE = 'Access-Control-Max-Age'
 
 
-class CorsPostCsrfMiddleware(object):
+class CorsPostCsrfMiddleware(MiddlewareMixin):
 
     def _https_referer_replace_reverse(self, request):
         """
@@ -48,7 +55,7 @@ class CorsPostCsrfMiddleware(object):
         return None
 
 
-class CorsMiddleware(object):
+class CorsMiddleware(MiddlewareMixin):
 
     def _https_referer_replace(self, request):
         """
