@@ -372,3 +372,41 @@ class TestCorsMiddlewareProcessResponse(TestCase):
         request = Mock(path='/data', META={'HTTP_ORIGIN': 'http://foobar.it'})
         processed = self.middleware.process_response(request, response)
         self.assertNotIn(ACCESS_CONTROL_ALLOW_ORIGIN, processed)
+
+    def test_middleware_integration_get(self, settings):
+        settings.CORS_MODEL = None
+        settings.CORS_ORIGIN_ALLOW_ALL = True
+        settings.CORS_URLS_REGEX = '^.*$'
+        response = self.client.get('/test-view/', HTTP_ORIGIN='http://foobar.it')
+        self.assertEqual(response.status_code, 200)
+        self.assertAccessControlAllowOriginEquals(response, 'http://foobar.it')
+
+    def test_middleware_integration_get_auth_view(self, settings):
+        """
+        It's not clear whether the header should still be set for non-HTTP200
+        when not a preflight request. However this is the existing behaviour for
+        django-cors-middleware, so at least this test makes that explicit, especially
+        since for the switch to Django 1.10, special-handling will need to be put in
+        place to preserve this behaviour. See `ExceptionMiddleware` mention here:
+        https://docs.djangoproject.com/en/1.10/topics/http/middleware/#upgrading-pre-django-1-10-style-middleware
+        """
+        settings.CORS_MODEL = None
+        settings.CORS_ORIGIN_ALLOW_ALL = True
+        settings.CORS_URLS_REGEX = '^.*$'
+        response = self.client.get('/test-view-http401/', HTTP_ORIGIN='http://foobar.it')
+        self.assertEqual(response.status_code, 401)
+        self.assertAccessControlAllowOriginEquals(response, 'http://foobar.it')
+
+    def test_middleware_integration_preflight_auth_view(self, settings):
+        """
+        Ensure HTTP200 and header still set, for preflight requests to views requiring
+        authentication. See: https://github.com/ottoyiu/django-cors-headers/issues/3
+        """
+        settings.CORS_MODEL = None
+        settings.CORS_ORIGIN_ALLOW_ALL = True
+        settings.CORS_URLS_REGEX = '^.*$'
+        response = self.client.options('/test-view-http401/',
+                                       HTTP_ORIGIN='http://foobar.it',
+                                       HTTP_ACCESS_CONTROL_REQUEST_METHOD='value')
+        self.assertEqual(response.status_code, 200)
+        self.assertAccessControlAllowOriginEquals(response, 'http://foobar.it')
