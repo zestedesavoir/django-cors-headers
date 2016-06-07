@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.http import HttpResponse
 from django.test import TestCase
 from corsheaders.middleware import CorsMiddleware, CorsPostCsrfMiddleware
@@ -10,6 +11,20 @@ from corsheaders.middleware import ACCESS_CONTROL_MAX_AGE
 from corsheaders import defaults as settings
 from mock import Mock
 from mock import patch
+
+
+def test_view(request):
+    return HttpResponse("Test view")
+
+
+def test_view_http401(request):
+    return HttpResponse('Unauthorized', status=401)
+
+
+urlpatterns = [
+    url(r'^test-view/$', test_view, name='test-view'),
+    url(r'^test-view-http401/$', test_view_http401, name='test-view-http401'),
+]
 
 
 class settings_override(object):

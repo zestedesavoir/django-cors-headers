@@ -22,6 +22,7 @@ def run_tests():
                 'TEST_NAME': ':memory:',
             },
         },
+        ROOT_URLCONF='corsheaders.tests',
         MIDDLEWARE_CLASSES=middleware,
     )
 
