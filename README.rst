@@ -63,6 +63,28 @@ Note that ``CorsMiddleware`` needs to come before Django’s
 setting, otherwise the CORS headers will be lost from the 304
 not-modified responses, causing errors in some browsers.
 
+Signals
+-------
+
+If you have a use-case that requires running Python code to check if a site exists,
+we provide a Django signal that covers this.
+We have a ``check_request_enabled`` signal that provides the request.
+Here is an example configuration::
+
+    from corsheaders import signals
+    from .models import Site
+
+    def handler(sender, request, **kwargs):
+        for site in Site.objects.all():
+            if request.host in site.domain:
+                return True
+        return False
+
+    signals.check_request_enabled.connect(handler)
+
+If the signal returns ``True``,
+then the request will have headers added to it.
+
 Configuration
 -------------
 
