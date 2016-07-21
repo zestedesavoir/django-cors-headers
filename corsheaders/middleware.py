@@ -160,7 +160,9 @@ class CorsMiddleware(object):
             self.check_signal(request)
 
     def check_signal(self, request):
-        signal_response = signals.check_request_enabled.send(sender=None, request=request)
+        signal_response = signals.check_request_enabled.send(
+            sender=None, request=request
+        )
         for function, return_value in signal_response:
             if return_value:
                 return True
