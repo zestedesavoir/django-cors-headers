@@ -85,7 +85,9 @@ Default:
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Specify a list of origin hostnames that are authorized to make a
-cross-site HTTP request
+cross-site HTTP request.  To allow requests from a file URL (e.g.
+``file:///home/bob/index.html``) add the string ``null`` to the
+whitelist.
 
 Example:
 
@@ -93,8 +95,12 @@ Example:
 
     CORS_ORIGIN_WHITELIST = (
         'google.com',
-        'hostname.example.com'
+        'hostname.example.com',
+        'localhost:8000',
+        'null'
     )
+
+Note that ``localhost`` is not the same as ``localhost:8000``.
 
 Default:
 
