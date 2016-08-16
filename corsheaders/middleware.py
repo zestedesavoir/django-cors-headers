@@ -23,6 +23,7 @@ except ImportError:
     MiddlewareMixin = object
 
 from corsheaders import defaults as settings
+from corsheaders import signals
 
 
 ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin'
@@ -125,7 +126,8 @@ class CorsMiddleware(MiddlewareMixin):
 
             if (not settings.CORS_ORIGIN_ALLOW_ALL and
                     self.origin_not_found_in_white_lists(origin, url) and
-                    not self.regex_url_allow_all_match(request.path)):
+                    not self.regex_url_allow_all_match(request.path) and
+                    not self.check_signal(request)):
                 return response
 
             response[ACCESS_CONTROL_ALLOW_ORIGIN] = "*" if (
@@ -161,7 +163,17 @@ class CorsMiddleware(MiddlewareMixin):
 
     def is_enabled(self, request):
         return re.match(settings.CORS_URLS_REGEX, request.path) or \
-            self.regex_url_allow_all_match(request.path)
+            self.regex_url_allow_all_match(request.path) or \
+            self.check_signal(request)
+
+    def check_signal(self, request):
+        signal_response = signals.check_request_enabled.send(
+            sender=None, request=request
+        )
+        for function, return_value in signal_response:
+            if return_value:
+                return True
+        return False
 
     def regex_url_allow_all_match(self, path):
         for url_pattern in settings.CORS_URLS_ALLOW_ALL_REGEX:

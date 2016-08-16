@@ -9,6 +9,7 @@ from corsheaders.middleware import ACCESS_CONTROL_ALLOW_HEADERS
 from corsheaders.middleware import ACCESS_CONTROL_ALLOW_METHODS
 from corsheaders.middleware import ACCESS_CONTROL_MAX_AGE
 from corsheaders import defaults as settings
+from corsheaders import signals
 from mock import Mock
 from mock import patch
 
@@ -215,6 +216,19 @@ class TestCorsMiddlewareProcessResponse(TestCase):
         request = Mock(path='/', META={'HTTP_ORIGIN': 'http://foobar.it'})
         processed = self.middleware.process_response(request, response)
         self.assertNotIn(ACCESS_CONTROL_ALLOW_ORIGIN, processed)
+
+    def test_process_response_signal_works(self, settings):
+        def handler(sender, request, **kwargs):
+            return True
+        settings.CORS_MODEL = None
+        settings.CORS_ORIGIN_ALLOW_ALL = False
+        settings.CORS_ORIGIN_WHITELIST = ['example.com']
+        settings.CORS_URLS_REGEX = '^.*$'
+        signals.check_request_enabled.connect(handler)
+        response = HttpResponse()
+        request = Mock(path='/', META={'HTTP_ORIGIN': 'http://foobar.it'})
+        processed = self.middleware.process_response(request, response)
+        self.assertIn(ACCESS_CONTROL_ALLOW_ORIGIN, processed)
 
     def test_process_response_in_whitelist(self, settings):
         settings.CORS_MODEL = None
