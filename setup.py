@@ -6,7 +6,8 @@ from setuptools import setup
 setup(
     name='django-cors-middleware',
     version=__version__,
-    description='django-cors-middleware is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS). Fork of django-cors-headers.',
+    description='django-cors-middleware is a Django application for handling the server headers required for Cross-Orig'
+                'in Resource Sharing (CORS). Fork of django-cors-headers.',
     author='Zeste de Savoir',
     author_email='dev@gustavi.net',
     url='https://github.com/zestedesavoir/django-cors-middleware',
