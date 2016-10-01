@@ -9,6 +9,7 @@ default_headers = (
     'x-csrftoken',
     'user-agent',
     'accept-encoding',
+    'cache-control',
 )
 
 CORS_ALLOW_HEADERS = getattr(settings, 'CORS_ALLOW_HEADERS', default_headers)
