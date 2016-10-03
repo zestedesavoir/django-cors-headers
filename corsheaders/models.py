@@ -6,3 +6,6 @@ from .signals import check_request_enabled  # noqa
 
 class CorsModel(models.Model):
     cors = models.CharField(max_length=255)
+    
+    def __unicode__(self)
+        return self.cors
