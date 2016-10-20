@@ -395,6 +395,20 @@ class TestCorsMiddlewareProcessResponse(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertAccessControlAllowOriginEquals(response, 'http://foobar.it')
 
+    def test_middleware_integration_options(self, settings):
+        settings.CORS_MODEL = None
+        settings.CORS_URLS_REGEX = '^.*$'
+        settings.CORS_ALLOW_CREDENTIALS = True
+        settings.CORS_ORIGIN_ALLOW_ALL = True
+        response = self.client.options(
+            '/test-view/',
+            HTTP_ORIGIN='http://foobar.it',
+            HTTP_ACCESS_CONTROL_REQUEST_METHOD='value',
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response[ACCESS_CONTROL_ALLOW_ORIGIN], 'http://foobar.it')
+        self.assertEqual(response['Vary'], 'Origin')
+
     def test_middleware_integration_get_auth_view(self, settings):
         """
         It's not clear whether the header should still be set for non-HTTP200

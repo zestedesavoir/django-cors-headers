@@ -7,6 +7,7 @@ except ImportError:
     from urllib.parse import urlparse
 
 from django.apps import apps
+from django.utils.cache import patch_vary_headers
 from django.utils.deprecation import MiddlewareMixin
 
 from corsheaders import defaults as settings
@@ -118,9 +119,11 @@ class CorsMiddleware(MiddlewareMixin):
                     not self.check_signal(request)):
                 return response
 
-            response[ACCESS_CONTROL_ALLOW_ORIGIN] = "*" if (
-                settings.CORS_ORIGIN_ALLOW_ALL and
-                not settings.CORS_ALLOW_CREDENTIALS) else origin
+            if settings.CORS_ORIGIN_ALLOW_ALL and not settings.CORS_ALLOW_CREDENTIALS:
+                response[ACCESS_CONTROL_ALLOW_ORIGIN] = "*"
+            else:
+                response[ACCESS_CONTROL_ALLOW_ORIGIN] = origin
+                patch_vary_headers(response, ['Origin'])
 
             if len(settings.CORS_EXPOSE_HEADERS):
                 response[ACCESS_CONTROL_EXPOSE_HEADERS] = ', '.join(
