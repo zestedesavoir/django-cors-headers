@@ -6,25 +6,13 @@ try:
 except ImportError:
     from urllib.parse import urlparse
 
-try:
-    from django.apps import apps
-    get_model = apps.get_model
-except ImportError:
-    try:
-        from django.db.models.loading import get_model
-    except ImportError:
-        from django.apps.apps.get_model import get_model
-
-try:
-    from django.utils.deprecation import MiddlewareMixin
-except ImportError:
-    # Not required for Django <= 1.9, see:
-    # https://docs.djangoproject.com/en/1.10/topics/http/middleware/#upgrading-pre-django-1-10-style-middleware
-    MiddlewareMixin = object
+from django.apps import apps
+from django.utils.deprecation import MiddlewareMixin
 
 from corsheaders import defaults as settings
 from corsheaders import signals
 
+get_model = apps.get_model
 
 ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin'
 ACCESS_CONTROL_EXPOSE_HEADERS = 'Access-Control-Expose-Headers'
