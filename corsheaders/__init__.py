@@ -1,4 +1,1 @@
-import warnings
-warnings.warn("DEPRECIATED - Please use django-cors-headers instead.", DeprecationWarning)
-
-__version__ = '1.5.0'
+__version__ = '999'
