@@ -3,9 +3,6 @@
 from corsheaders import __version__
 from setuptools import setup, find_packages
 
-import warnings
-warnings.warn("DEPRECIATED - Please use django-cors-headers instead.", DeprecationWarning)
-
 setup(
     name='django-cors-middleware',
     version=__version__,
